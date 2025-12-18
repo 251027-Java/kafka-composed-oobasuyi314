@@ -21,20 +21,20 @@ public class ConsumerApp {
     }
 
     // TODO: Add @KafkaListener annotation
-    // @KafkaListener(topics = "messages", groupId = "message-consumers")
+    @KafkaListener(topics = "messages", groupId = "message-consumers")
     public void listen(String message) {
         System.out.println("Received message: " + message);
         receivedMessages.add(message);
     }
 
-    @GetMapping
+    @GetMapping("/api/messages")
     public Map<String, Object> getMessages() {
         return Map.of(
                 "count", receivedMessages.size(),
                 "messages", receivedMessages);
     }
 
-    @DeleteMapping
+    @DeleteMapping("/api/messages")
     public Map<String, String> clearMessages() {
         receivedMessages.clear();
         return Map.of("status", "cleared");
